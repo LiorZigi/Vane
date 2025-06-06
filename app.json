@@ -4,13 +4,13 @@
     "slug": "Vane",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/vane.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/splash-icon.png",
-      "resizeMode": "contain",
+      "image": "./assets/images/vane.png",
+      "contentFit": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
@@ -18,18 +18,16 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/vane.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/vane.png"
     },
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router", "expo-localization"],
     "experiments": {
       "typedRoutes": true
     }
