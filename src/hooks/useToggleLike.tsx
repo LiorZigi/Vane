@@ -1,7 +1,7 @@
 // src/hooks/useToggleLike.ts
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query'
 import supabase from '../../initSupabase'
-import type { Post } from '@/domains/feed/models/PostModel'
+import type { Post } from '@/models/types'
 
 type PostsContext = {
   previousFeed?: InfiniteData<Post[]>
@@ -55,12 +55,9 @@ export function useToggleLike() {
           ...old!,
           pages: old!.pages.map(page =>
             page.map(p =>
-              p.postId === postId
+              p.id === postId
                 ? {
                   ...p,
-                  // use whatever your field is named:
-                  // if your Post type is `likesCount`, then use that key;
-                  // if it's `likes_count` (snake_case), use that.
                   likes_count: p.likes_count + (isLiked ? -1 : +1),
                   liked_by_me: !isLiked
                 }

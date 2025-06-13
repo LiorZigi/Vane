@@ -1,7 +1,7 @@
 import { GestureResponderEvent, Pressable, StyleSheet, View } from "react-native";
 import VaneIcon from "../../../../assets/icons/VaneIcon";
 import { useTheme } from "@react-navigation/native";
-import { VnView, VnText } from "@vane-ui";
+import { VnText } from "@vane-ui";
 
 interface InteractionButtonProps {
   iconName: string;

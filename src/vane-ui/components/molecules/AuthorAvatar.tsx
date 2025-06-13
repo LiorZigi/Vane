@@ -1,17 +1,23 @@
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
-import { VnView } from '@vane-ui';
+import { router } from 'expo-router';
 
 interface AuthorAvatarProps {
   color: string;
   authorAvatarUrl: string;
+  userId: string;
 }
 
-export default function AuthorAvatar({ color, authorAvatarUrl }: AuthorAvatarProps) {
+export default function AuthorAvatar({ color, authorAvatarUrl, userId }: AuthorAvatarProps) {
+
+  const navigateToProfile = () => {
+    router.push({ pathname: '/[userId]', params: { userId: userId } });
+  }
+
   return (
-    <View style={[styles.container, { backgroundColor: color }]}>
+    <Pressable style={[styles.container, { backgroundColor: color }]} onPress={navigateToProfile}>
       <Image source={{ uri: authorAvatarUrl }} style={styles.image} />
-    </View>
+    </Pressable>
   );
 }
 

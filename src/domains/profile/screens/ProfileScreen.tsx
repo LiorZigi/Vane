@@ -16,35 +16,24 @@ import { useTheme } from '@react-navigation/native';
 import { useUserData } from '@/hooks/useUserData';
 import { VnButton, VnText } from '@vane-ui';
 import HorizontalLine from '../components/HorizontalLine';
+import { UserPosts } from '@/domains/user/components/user-posts';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const HEADER_HEIGHT = 200;
 const AVATAR_SIZE = 100;
 
 export interface ProfileScreenProps {
-  name: string;
-  bio: string;
-  postsCount: number;
-  followersCount: number;
-  followingCount: number;
-  isFollowing: boolean;
-  onFollow: (event: GestureResponderEvent) => void;
-  onMessage: (event: GestureResponderEvent) => void;
-  onBack?: (event: GestureResponderEvent) => void;
-  onSettings?: (event: GestureResponderEvent) => void;
+  isFollowing?: boolean;
+  isOwnProfile?: boolean;
+  onFollow?: (event: GestureResponderEvent) => void;
+  onMessage?: (event: GestureResponderEvent) => void;
 }
 
 const ProfileScreen: FC<ProfileScreenProps> = ({
-  name,
-  bio,
-  postsCount,
-  followersCount,
-  followingCount,
-  isFollowing,
-  onFollow,
-  onMessage,
-  onBack,
-  onSettings,
+  isFollowing = false,
+  isOwnProfile = false,
+  onFollow = () => { },
+  onMessage = () => { },
 }) => {
   const { colors } = useTheme() as any;
   const router = useRouter();
@@ -95,26 +84,28 @@ const ProfileScreen: FC<ProfileScreenProps> = ({
         </Text>
 
         {/* Action Buttons */}
-        <View style={styles.actionsRow}>
-          <VnButton
-            title={isFollowing ? 'Following' : 'Follow'}
-            onPress={onFollow}
-            style={{ minWidth: 100 }}
-          />
+        {!isOwnProfile && (
+          <View style={styles.actionsRow}>
+            <VnButton
+              title={isFollowing ? 'Following' : 'Follow'}
+              onPress={onFollow}
+              style={{ minWidth: 100 }}
+            />
 
-          <VnButton
-            title="Message"
-            onPress={onMessage}
-            color={colors.primary}
-            style={{ minWidth: 100 }}
-          />
-        </View>
+            <VnButton
+              title="Message"
+              onPress={onMessage}
+              color={colors.primary}
+              style={{ minWidth: 100 }}
+            />
+          </View>
+        )}
 
         {/* Stats Row */}
         <View style={styles.statsRow}>
           <View style={styles.statItem}>
             <Text style={[styles.statValue, { color: colors.text }]}>
-              {postsCount ?? 0}
+              {userData?.posts_count ?? 0}
             </Text>
             <Text style={[styles.statLabel, { color: colors.text }]}>Posts</Text>
           </View>
@@ -133,7 +124,7 @@ const ProfileScreen: FC<ProfileScreenProps> = ({
         </View>
       </View>
       <HorizontalLine />
-
+      <UserPosts userId={userData?.id ?? ''} />
     </VnView>
   );
 };
@@ -206,6 +197,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     width: '100%',
+    paddingHorizontal: 20,
   },
   statItem: {
     alignItems: 'center',

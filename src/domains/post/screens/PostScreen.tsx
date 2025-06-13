@@ -1,10 +1,10 @@
-import { StyleSheet } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import useHeaderLayout from "@/hooks/useHeaderLayout";
-import { AuthorAvatar, PostInteractions, VnText, VnView } from "@vane-ui";
-import { useLocalSearchParams } from "expo-router";
-import { usePost } from "@/hooks/usePost";
-import HorizontalLine from "@/domains/profile/components/HorizontalLine";
+import { StyleSheet } from 'react-native';
+import { useTheme } from '@react-navigation/native';
+import useHeaderLayout from '@/hooks/useHeaderLayout';
+import { AuthorAvatar, PostInteractions, VnText, VnView } from '@vane-ui';
+import { useLocalSearchParams } from 'expo-router';
+import { usePost } from '@/hooks/usePost';
+import HorizontalLine from '@/domains/profile/components/HorizontalLine';
 
 export default function PostScreen() {
   const { postId } = useLocalSearchParams<{ postId: string }>();
@@ -15,29 +15,42 @@ export default function PostScreen() {
   return (
     <VnView gradient scrollable contentContainerStyle={{ gap: 16, flex: 1 }}>
       <VnView style={styles.authorContainer}>
-        <AuthorAvatar authorAvatarUrl={post?.author_avatar_url} color={colors.text} />
+        <AuthorAvatar
+          authorAvatarUrl={post?.author_avatar_url}
+          color={colors.text}
+        />
         <VnView style={styles.authorNameContainer}>
           <VnText style={styles.authorName}>{post?.author_display_name}</VnText>
-          <VnText style={styles.authorUsername}>@{post?.author_username}</VnText>
+          <VnText style={styles.authorUsername}>
+            @{post?.author_username}
+          </VnText>
         </VnView>
       </VnView>
       <VnView style={styles.postContainer}>
         <VnText style={styles.postContent}>{post?.content}</VnText>
       </VnView>
       <VnView style={styles.postDateContainer}>
-        <VnText style={[styles.postDate, { color: colors.textInfo }]}>{new Date(post?.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</VnText>
+        <VnText style={[styles.postDate, { color: colors.textInfo }]}>
+          {new Date(post?.created_at).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </VnText>
       </VnView>
       <PostInteractions
         style={styles.postInteractionsContainer}
         postId={postId}
-        likesCount={post?.likes_count}
-        commentsCount={post?.comments_count}
-        repostCount={post?.repost_count}
-        isLiked={post?.liked_by_me}
+        likesCount={post?.likes_count || 0}
+        commentsCount={post?.comments_count || 0}
+        repostCount={post?.repost_count || 0}
+        isLiked={post?.liked_by_me || false}
       />
       <HorizontalLine />
     </VnView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

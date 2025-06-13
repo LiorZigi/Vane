@@ -65,6 +65,7 @@ const HeadText = (props: HeadTextProps) => {
 
 export default function WelcomeScreen() {
   const session = useSession();
+  console.log("session", session);
   // const { data: user, isLoading, isError } = useUserData();
   const { top, bottom } = useSafeAreaInsets();
   const { colors } = useTheme() as any;

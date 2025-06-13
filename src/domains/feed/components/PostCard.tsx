@@ -13,6 +13,7 @@ interface PostCardProps {
   postId: string;
   content: string;
   author: string;
+  authorId: string;
   authorAvatarUrl: string;
   color: string;
   likesCount: number;
@@ -21,13 +22,14 @@ interface PostCardProps {
   createdAt: string;
   isLiked: boolean;
   mediaUrls?: string[];
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 export default function PostCard({
   postId,
   content,
   author,
+  authorId,
   authorAvatarUrl,
   color,
   likesCount,
@@ -35,7 +37,6 @@ export default function PostCard({
   repostCount,
   mediaUrls,
   createdAt,
-  onPress,
   isLiked,
 }: PostCardProps) {
   return (
@@ -43,19 +44,21 @@ export default function PostCard({
       style={[styles.container]}
     >
       <View style={styles.authorContainer}>
-        <AuthorAvatar color={color} authorAvatarUrl={authorAvatarUrl} />
+        <AuthorAvatar color={color} authorAvatarUrl={authorAvatarUrl} userId={authorId} />
         <View style={{ alignItems: 'flex-start', gap: 10, flex: 1 }}>
           <AuthorDetails author={author} createdAt={createdAt} />
           <PostContent content={content} />
         </View>
       </View>
-      <PostInteractions
-        postId={postId}
-        likesCount={likesCount}
-        commentsCount={commentsCount}
-        repostCount={repostCount}
-        isLiked={isLiked}
-      />
+      <View style={{ paddingHorizontal: 16 }}>
+        <PostInteractions
+          postId={postId}
+          likesCount={likesCount}
+          commentsCount={commentsCount}
+          repostCount={repostCount}
+          isLiked={isLiked}
+        />
+      </View>
       <HorizontalLine />
     </Animated.View>
   );
@@ -63,7 +66,7 @@ export default function PostCard({
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    // padding: 16,
     borderRadius: 10,
     gap: 15,
     backgroundColor: 'transparent',
@@ -72,6 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    padding: 16,
     gap: 10,
   },
 });

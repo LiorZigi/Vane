@@ -7,6 +7,7 @@ export interface VaneUser {
   createdAt: string;
   followers: number;
   following: number;
+  posts_count: number;
 }
 
 export interface Post {
